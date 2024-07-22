@@ -1,11 +1,23 @@
 import { auth } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.GEMINI_API_KEY;
+const googleGenerativeAI = new GoogleGenerativeAI(
+  process.env.GEMINI_API_KEY as string
+);
 
-// TODO : Implement conversation with history data
-export async function POST(req: Request) {
+const model = googleGenerativeAI.getGenerativeModel({
+  model: "gemini-pro",
+  generationConfig: {
+    maxOutputTokens: 500,
+  },
+});
+
+const truncateMessages = (messages: any) => {
+  return messages.slice(Math.max(messages.length - 3, 0));
+};
+
+export async function POST(req: NextRequest) {
   try {
     const { userId } = auth();
     const body = await req.json();
@@ -15,26 +27,21 @@ export async function POST(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!messages) {
+    if (!messages || messages.length === 0) {
       return new NextResponse("Messages are required", { status: 400 });
     }
 
-    if (!apiKey) {
-      return NextResponse.json("GEMINI_API_KEY is not defined", {
-        status: 500,
-      });
-    }
+    const truncatedMessages = truncateMessages(messages);
 
-    const googleGenerativeAI = new GoogleGenerativeAI(apiKey);
+    const prompt = truncatedMessages
+      .map(
+        (msg: { role: string; content: string }) =>
+          `${msg.role}: ${msg.content}`
+      )
+      .join("\n");
 
-    const model = googleGenerativeAI.getGenerativeModel({
-      model: "gemini-pro",
-    });
-
-    const result = await model.generateContent(messages.content);
-
+    const result = await model.generateContent(prompt);
     const response = await result.response;
-
     const output = response.text();
 
     const systemMessage = {
