@@ -13,6 +13,10 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { cn } from "@/lib/utils";
+import Loader from "@/components/loader";
+import Empty from "@/components/empty";
+import UserAvatar from "@/components/user-avatar";
+import BotAvatar from "@/components/bot-avatar";
 
 const ConversationPage = () => {
   const router = useRouter();
@@ -69,7 +73,7 @@ const ConversationPage = () => {
                 name="prompt"
                 render={({ field }) => (
                   <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0">
+                    <FormControl className="m-0 p-0 px-3">
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                         disabled={isLoading}
@@ -91,18 +95,30 @@ const ConversationPage = () => {
         </div>
 
         <div className="space-y-4 mt-4">
-          <div className="flex flex-col-reverse gap-y-4">
+          {isLoading && (
+            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+              <Loader />
+            </div>
+          )}
+
+          {messages.length === 0 && !isLoading && (
+            <Empty label="Start a conversation by entering a prompt above" />
+          )}
+
+          <div className="flex flex-col gap-y-4">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={cn(
-                  "p-8 w-full flex items-center gap-x-8 rounded-lg",
+                  "px-8 py-5 w-full flex items-center gap-x-8 rounded-lg",
                   message.role === "user"
                     ? "bg-white border border-black/10"
                     : "bg-muted"
                 )}
               >
-                {message.content}
+                {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
+
+                <p className="text-sm">{message.content}</p>
               </div>
             ))}
           </div>
