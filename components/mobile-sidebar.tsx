@@ -3,15 +3,16 @@
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import Sidebar from "./sidebar";
+import { Button } from "./ui/button";
 
 const MobileSidebar = () => {
   return (
     <Sheet>
-      <div className="md:hidden">
-        <SheetTrigger>
+      <SheetTrigger asChild>
+        <Button variant={"ghost"} size={"icon"} className="md:hidden">
           <Menu />
-        </SheetTrigger>
-      </div>
+        </Button>
+      </SheetTrigger>
       <SheetContent side={"left"} className="p-0">
         <Sidebar />
       </SheetContent>
