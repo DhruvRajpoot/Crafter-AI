@@ -6,7 +6,7 @@ interface EmptyProps {
 
 const Empty: React.FC<EmptyProps> = ({ label }) => {
   return (
-    <div className="h-full p-20 flex flex-col items-center justify-center">
+    <div className="h-full py-20 flex flex-col items-center justify-center">
       <div className="relative h-60 w-60">
         <Image alt="Empty" fill src="/empty.png" />
       </div>
