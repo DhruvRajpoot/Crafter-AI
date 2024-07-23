@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const instructionMessage = {
   role: "system",
   content:
-    "You are a code generator. You must answer only in markdown code snippets. Use code comments for explanations.",
+    "You are an AI assistant. You must provide descriptive explanations and include code snippets where appropriate. Use code comments for explanations of the code.",
 };
 
 const googleGenerativeAI = new GoogleGenerativeAI(
@@ -14,9 +14,9 @@ const googleGenerativeAI = new GoogleGenerativeAI(
 
 const model = googleGenerativeAI.getGenerativeModel({
   model: "gemini-pro",
-  generationConfig: {
-    maxOutputTokens: 300,
-  },
+  // generationConfig: {
+  //   maxOutputTokens: 300,
+  // },
 });
 
 export async function POST(req: NextRequest) {
