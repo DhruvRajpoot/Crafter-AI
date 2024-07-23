@@ -1,7 +1,7 @@
 "use client";
 
 import Heading from "@/components/heading";
-import { ImageIcon } from "lucide-react";
+import { Download, ImageIcon } from "lucide-react";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -21,6 +21,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SelectContent } from "@radix-ui/react-select";
+import { Card, CardFooter } from "@/components/ui/card";
+import Image from "next/image";
 
 const ImagePage = () => {
   const router = useRouter();
@@ -164,7 +166,24 @@ const ImagePage = () => {
             <Empty label="No images generated." />
           )}
 
-          <div>Render Images</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+            {images.map((src, index) => (
+              <Card key={index} className="rounded-lg overflow-hidden">
+                <div className="relative aspect-square">
+                  <Image src={src} alt="Generated Image" fill />
+                </div>
+                <CardFooter className="p-2">
+                  <Button
+                    className="w-full"
+                    variant={"secondary"}
+                    onClick={() => window.open(src, "_blank")}
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>

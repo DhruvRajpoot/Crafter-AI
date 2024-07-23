@@ -2,45 +2,27 @@ import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const instructionMessage = {
-  role: "system",
-  content:
-    "You are an AI assistant. You must provide descriptive explanations and include code snippets where appropriate. Use code comments for explanations of the code.",
-};
-
 const googleGenerativeAI = new GoogleGenerativeAI(
   process.env.GEMINI_API_KEY as string
 );
 
 const model = googleGenerativeAI.getGenerativeModel({
-  model: "gemini-pro",
-  // generationConfig: {
-  //   maxOutputTokens: 300,
-  // },
+  model: "text-to-image",
 });
 
 export async function POST(req: NextRequest) {
   try {
     const { userId } = auth();
     const body = await req.json();
-    const { messages } = body;
+    const { prompt, amount = 1, resolution = "512x512" } = body;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!messages || messages.length === 0) {
-      return new NextResponse("Messages are required", { status: 400 });
+    if (!prompt) {
+      return new NextResponse("Prompt is required", { status: 400 });
     }
-
-    messages.push(instructionMessage);
-
-    const prompt = messages
-      .map(
-        (msg: { role: string; content: string }) =>
-          `${msg.role}: ${msg.content}`
-      )
-      .join("\n");
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -53,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(systemMessage);
   } catch (error) {
-    console.log("[Code Error]", error);
+    console.log("[Image Error]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
