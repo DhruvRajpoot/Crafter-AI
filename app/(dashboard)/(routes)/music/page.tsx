@@ -94,7 +94,7 @@ const MusicPage = () => {
           )}
 
           {!music && !isLoading && (
-            <Empty label="Start generating music by entering a prompt" />
+            <Empty label="Let's create some beautiful music! Type your request above to begin" />
           )}
 
           {music && (

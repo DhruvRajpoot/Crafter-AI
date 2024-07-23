@@ -105,7 +105,7 @@ const CodePage = () => {
           )}
 
           {messages.length === 0 && !isLoading && (
-            <Empty label="Start a conversation by entering a prompt above" />
+            <Empty label="Ready to create some code? Type your prompt above to get started!" />
           )}
 
           <div className="flex flex-col gap-y-4">
