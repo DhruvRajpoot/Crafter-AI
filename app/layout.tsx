@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AppContextProvider } from "@/context/appContext";
 import ToastProvider from "@/components/toast-provider";
+import { CrispProvider } from "@/components/crisp";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
     <ClerkProvider>
       <AppContextProvider>
         <html lang="en">
+          <CrispProvider />
           <body className={inter.className}>
             <ToastProvider />
             {children}
