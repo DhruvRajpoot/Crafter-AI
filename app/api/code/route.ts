@@ -1,6 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 
 const instructionMessage = {
   role: "system",
@@ -33,6 +34,12 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Messages are required", { status: 400 });
     }
 
+    const freeTrial = await checkApiLimit(userId);
+
+    if (!freeTrial) {
+      return new NextResponse("Free trial has expired", { status: 403 });
+    }
+
     messages.push(instructionMessage);
 
     const prompt = messages
@@ -50,6 +57,8 @@ export async function POST(req: NextRequest) {
       role: "system",
       content: output,
     };
+    
+    await increaseApiLimit(userId);
 
     return NextResponse.json(systemMessage);
   } catch (error) {
