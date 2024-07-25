@@ -18,6 +18,7 @@ import Empty from "@/components/empty";
 import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
 import { useAppContext } from "@/context/appContext";
+import toast from "react-hot-toast";
 
 const ConversationPage = () => {
   const router = useRouter();
@@ -53,6 +54,8 @@ const ConversationPage = () => {
       console.error(error);
       if (error?.response?.status === 403) {
         handleProModal();
+      } else {
+        toast.error("Something went wrong. Please try again later.");
       }
     } finally {
       router.refresh();

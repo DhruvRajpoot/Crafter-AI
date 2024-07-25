@@ -24,6 +24,7 @@ import { SelectContent } from "@radix-ui/react-select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useAppContext } from "@/context/appContext";
+import toast from "react-hot-toast";
 
 const ImagePage = () => {
   const router = useRouter();
@@ -54,6 +55,8 @@ const ImagePage = () => {
       console.error(error);
       if (error?.response?.status === 403) {
         handleProModal();
+      } else {
+        toast.error("Something went wrong. Please try again later.");
       }
     } finally {
       router.refresh();

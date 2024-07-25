@@ -19,6 +19,7 @@ import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
 import MarkdownRenderer from "./markdownRender";
 import { useAppContext } from "@/context/appContext";
+import toast from "react-hot-toast";
 
 const CodePage = () => {
   const router = useRouter();
@@ -51,9 +52,10 @@ const CodePage = () => {
 
       form.reset();
     } catch (error: any) {
-      console.error(error);
       if (error?.response?.status === 403) {
         handleProModal();
+      } else {
+        toast.error("Something went wrong. Please try again later.");
       }
     } finally {
       router.refresh();

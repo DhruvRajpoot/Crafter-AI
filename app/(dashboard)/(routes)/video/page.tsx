@@ -15,6 +15,7 @@ import axios from "axios";
 import Loader from "@/components/loader";
 import Empty from "@/components/empty";
 import { useAppContext } from "@/context/appContext";
+import toast from "react-hot-toast";
 
 const VideoPage = () => {
   const router = useRouter();
@@ -43,6 +44,8 @@ const VideoPage = () => {
       console.error(error);
       if (error?.response?.status === 403) {
         handleProModal();
+      } else {
+        toast.error("Something went wrong. Please try again later.");
       }
     } finally {
       router.refresh();
