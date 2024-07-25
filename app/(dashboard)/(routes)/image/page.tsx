@@ -23,9 +23,11 @@ import {
 import { SelectContent } from "@radix-ui/react-select";
 import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
+import { useAppContext } from "@/context/appContext";
 
 const ImagePage = () => {
   const router = useRouter();
+  const { handleProModal } = useAppContext();
   const [images, setImages] = useState<string[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,6 +52,9 @@ const ImagePage = () => {
       form.reset();
     } catch (error: any) {
       console.error(error);
+      if (error?.response?.status === 403) {
+        handleProModal();
+      }
     } finally {
       router.refresh();
     }

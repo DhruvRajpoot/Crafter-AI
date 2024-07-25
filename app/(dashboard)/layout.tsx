@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import ProModal from "@/components/pro-modal";
 import Sidebar from "@/components/sidebar";
 import { getApiLimitCount } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs/server";
@@ -17,14 +18,16 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
         scrollbarColor: "#111827 #9ca3af",
       }}
     >
-      <div className="hidden h-full md:flex md:flex-col md:w-72 md:fixed md:inset-y-0 z-[80] bg-gray-900">
-        <Sidebar apiLimitCount={apiLimitCount}/>
+      <div className="hidden h-full md:flex md:flex-col md:w-72 md:fixed md:inset-y-0 bg-gray-900">
+        <Sidebar apiLimitCount={apiLimitCount} />
       </div>
 
       <main className="md:pl-72 pb-4">
         <Navbar />
         {children}
       </main>
+
+      <ProModal />
     </div>
   );
 };

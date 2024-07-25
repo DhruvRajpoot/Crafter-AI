@@ -14,9 +14,11 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Loader from "@/components/loader";
 import Empty from "@/components/empty";
+import { useAppContext } from "@/context/appContext";
 
 const MusicPage = () => {
   const router = useRouter();
+  const { handleProModal } = useAppContext();
   const [music, setMusic] = useState<string>();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,6 +41,9 @@ const MusicPage = () => {
       form.reset();
     } catch (error: any) {
       console.error(error);
+      if (error?.response?.status === 403) {
+        handleProModal();
+      }
     } finally {
       router.refresh();
     }

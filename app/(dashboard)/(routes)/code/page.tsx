@@ -18,9 +18,11 @@ import Empty from "@/components/empty";
 import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
 import MarkdownRenderer from "./markdownRender";
+import { useAppContext } from "@/context/appContext";
 
 const CodePage = () => {
   const router = useRouter();
+  const { handleProModal } = useAppContext();
   const [messages, setMessages] = useState<any[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,6 +52,9 @@ const CodePage = () => {
       form.reset();
     } catch (error: any) {
       console.error(error);
+      if (error?.response?.status === 403) {
+        handleProModal();
+      }
     } finally {
       router.refresh();
     }
