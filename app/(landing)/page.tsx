@@ -1,18 +1,14 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import React from "react";
+import LandingContent from "@/components/landing-content";
+import LandingHero from "@/components/landing-hero";
+import LandingNavbar from "@/components/landing-navbar";
 
 const LandingPage = () => {
   return (
-    <div>
-      LandingPage
-      <div>
-        <Link href="/sign-in">
-          <Button>Login</Button>
-        </Link>
-        <Link href="/sign-up">
-          <Button>Register</Button>
-        </Link>
+    <div className="h-full bg-[#111827] overflow-auto">
+      <div className="mx-auto max-w-screen-xl h-full">
+        <LandingNavbar />
+        <LandingHero />
+        <LandingContent />
       </div>
     </div>
   );
