@@ -8,11 +8,11 @@ const Navbar = async () => {
   const apiLimitCount = await getApiLimitCount(userId as string);
 
   return (
-    <div className="flex items-center p-4">
+    <div className="flex items-center p-4 h-[60px]">
       <MobileSidebar apiLimitCount={apiLimitCount} />
 
       <div className="flex w-full justify-end">
-        <UserButton afterSwitchSessionUrl="/" />
+        <UserButton afterSwitchSessionUrl="/" showName />
       </div>
     </div>
   );

@@ -55,7 +55,12 @@ const ConversationPage = () => {
       if (error?.response?.status === 403) {
         handleProModal();
       } else {
-        toast.error("Something went wrong. Please try again later.");
+        const message =
+          error?.response?.data?.message ||
+          error.message ||
+          "Something went wrong. Please try again later.";
+
+        toast.error(message);
       }
     } finally {
       router.refresh();
