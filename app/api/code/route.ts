@@ -28,17 +28,26 @@ export async function POST(req: NextRequest) {
     const { messages } = body;
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse(
+        JSON.stringify({ message: "Unauthorized access" }),
+        { status: 401, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     if (!messages || messages.length === 0) {
-      return new NextResponse("Messages are required", { status: 400 });
+      return new NextResponse(
+        JSON.stringify({ message: "Messages are required" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     const freeTrial = await checkApiLimit(userId);
 
     if (!freeTrial) {
-      return new NextResponse("Free trial has expired", { status: 403 });
+      return new NextResponse(
+        JSON.stringify({ message: "Free trial has expired" }),
+        { status: 403, headers: { "Content-Type": "application/json" } }
+      );
     }
 
     messages.push(instructionMessage);
@@ -71,8 +80,14 @@ export async function POST(req: NextRequest) {
         "Content-Type": "text/plain",
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("[Code Error]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    return new NextResponse(
+      JSON.stringify({
+        message: "Internal Server Error",
+        details: error.message || "An unexpected error occurred.",
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }

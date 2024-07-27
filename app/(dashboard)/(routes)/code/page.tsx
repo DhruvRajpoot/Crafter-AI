@@ -2,7 +2,7 @@
 
 import Heading from "@/components/heading";
 import { Code } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { formSchema } from "./constants";
@@ -16,9 +16,9 @@ import Loader from "@/components/loader";
 import Empty from "@/components/empty";
 import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
-import MarkdownRenderer from "@/components/markdownRender";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
+import MarkdownRenderer from "@/components/markdownRender";
 
 const CodePage = () => {
   const router = useRouter();
@@ -26,6 +26,9 @@ const CodePage = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [responseContent, setResponseContent] = useState<string>("");
+  const [shouldScroll, setShouldScroll] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollTopRef = useRef<number>(0);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,6 +36,24 @@ const CodePage = () => {
       prompt: "",
     },
   });
+
+  const scrollToBottom = () => {
+    if (shouldScroll && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = event.currentTarget.scrollTop;
+    const scrollHeight = event.currentTarget.scrollHeight;
+    const clientHeight = event.currentTarget.clientHeight;
+
+    scrollTopRef.current = scrollTop;
+
+    if (scrollTop + clientHeight < scrollHeight - 5) {
+      setShouldScroll(false);
+    }
+  };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
@@ -45,6 +66,8 @@ const CodePage = () => {
 
       setIsLoading(true);
 
+      setShouldScroll(true);
+
       setResponseContent("");
 
       const response = await fetch("/api/code", {
@@ -56,7 +79,12 @@ const CodePage = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok.");
+        const errorData = await response.json();
+        const error = new Error(
+          errorData.message || "An error occurred while fetching data."
+        );
+        (error as any).status = response.status;
+        throw error;
       }
 
       const reader = response.body?.getReader();
@@ -82,13 +110,11 @@ const CodePage = () => {
 
       form.reset();
     } catch (error: any) {
-      if (error?.response?.status === 403) {
+      if (error?.status === 403) {
         handleProModal();
       } else {
         const message =
-          error?.response?.data?.message ||
-          error.message ||
-          "Something went wrong. Please try again later.";
+          error.message || "Something went wrong. Please try again later.";
 
         toast.error(message);
       }
@@ -97,6 +123,10 @@ const CodePage = () => {
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, responseContent, isLoading, shouldScroll]);
 
   return (
     <div>
@@ -109,7 +139,7 @@ const CodePage = () => {
       />
 
       <div className="px-4 lg:px-8">
-        <div>
+        <div className="sticky top-0 bg-white border-b border-gray-200 shadow-md z-10 rounded-lg">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -140,7 +170,7 @@ const CodePage = () => {
           </Form>
         </div>
 
-        <div className="space-y-4 mt-4">
+        <div className="space-y-4 mt-4" onScroll={handleScroll}>
           {isLoading && (
             <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
               <Loader />
@@ -179,6 +209,7 @@ const CodePage = () => {
               </div>
             )}
           </div>
+          <div ref={messagesEndRef} />
         </div>
       </div>
     </div>
