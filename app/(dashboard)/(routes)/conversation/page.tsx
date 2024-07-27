@@ -183,7 +183,7 @@ const ConversationPage = () => {
         </div>
       </div>
 
-      <div className=" bg-white border-b border-gray-200 shadow-md z-10 rounded-lg mt-auto">
+      <div className=" bg-white border-b border-gray-200 shadow-md z-10 rounded-lg">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -192,7 +192,7 @@ const ConversationPage = () => {
             <FormField
               name="prompt"
               render={({ field }) => (
-                <FormItem className="col-span-12 lg:col-span-10">
+                <FormItem className="col-span-12 lg:col-span-9">
                   <FormControl className="m-0 p-0 px-3">
                     <Input
                       className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
@@ -205,7 +205,7 @@ const ConversationPage = () => {
               )}
             />
             <Button
-              className="col-span-12 lg:col-span-2 w-full"
+              className="col-span-12 lg:col-span-3 min-w-fit mr-14 sm:mr-16 lg:mr-10"
               disabled={isLoading}
             >
               Generate

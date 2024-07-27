@@ -12,7 +12,7 @@ const LandingHero = () => {
     <div className="text-white font-bold pt-36 pb-16 text-center space-y-5">
       <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
         <h1>The best AI tool for </h1>
-        <div className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 pb-2 h-12 sm:h-14 md:h-16">
+        <div className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 h-12 sm:h-14 md:h-16 lg:h-20">
           <TypewriterComponent
             options={{
               strings: [
