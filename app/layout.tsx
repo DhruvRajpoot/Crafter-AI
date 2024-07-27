@@ -11,7 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Crafter AI",
-  description: "AI powered content creation",
+  description:
+    "Crafter AI is a Next.js web application that leverages advanced AI technologies to generate text, audio, video, and images. It provides a seamless and interactive experience for users to create diverse content effortlessly.",
 };
 
 export default function RootLayout({
