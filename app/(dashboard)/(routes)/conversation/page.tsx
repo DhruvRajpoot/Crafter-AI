@@ -19,6 +19,7 @@ import BotAvatar from "@/components/bot-avatar";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
 import MarkdownRenderer from "@/components/markdownRender";
+import * as animationData from "@/assets/conversation.json";
 
 const ConversationPage = () => {
   const router = useRouter();
@@ -176,7 +177,7 @@ const ConversationPage = () => {
           )}
 
           {messages.length === 0 && !isLoading && (
-            <Empty label="Start a conversation by entering a prompt above" />
+            <Empty label="Start a conversation by entering a prompt above" animationData={animationData}/>
           )}
 
           <div ref={messagesEndRef} />
