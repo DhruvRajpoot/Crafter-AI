@@ -1,18 +1,62 @@
+import { Copy } from "lucide-react";
 import React from "react";
+import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const MarkdownRenderer = ({ message }: { message: { content: string } }) => {
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        toast.success("Copied to clipboard");
+      })
+      .catch(() => {
+        toast.error("Failed to copy to clipboard");
+      });
+  };
+
+  const extractCodeText = (children: React.ReactNode): string => {
+    if (typeof children === "string") {
+      return children;
+    }
+
+    if (Array.isArray(children)) {
+      return children.map((child) => extractCodeText(child)).join("");
+    }
+
+    if (React.isValidElement(children) && children.props.children) {
+      return extractCodeText(children.props.children);
+    }
+
+    return "";
+  };
+
   return (
-    <div className="text-sm overflow-hidden leading-7 prose prose-sm prose-headings:font-semibold prose-headings:text-gray-800">
+    <div className="text-sm overflow-hidden leading-7 prose prose-sm prose-headings:font-semibold prose-headings:text-gray-800 relative">
       <ReactMarkdown
         components={{
-          pre: ({ node, ...props }) => (
-            <div className="overflow-auto w-full bg-gray-800 text-white px-2 rounded-lg mb-4">
-              <pre {...props} />
-            </div>
-          ),
+          pre: ({ node, ...props }) => {
+            const codeText = extractCodeText(props.children);
+
+            return (
+              <div className="relative overflow-auto w-full bg-gray-800 text-white px-2 rounded-lg mb-4">
+                <div className="w-full pt-2">
+                  <button
+                    className="w-fit ml-auto flex items-center gap-1.5 text-xs text-gray-300 bg-gray-700 px-2 py-0.5 rounded-sm active:bg-gray-600"
+                    onClick={() => {
+                      copyToClipboard(codeText);
+                    }}
+                  >
+                    <Copy className="w-3 h-3" />
+                    Copy
+                  </button>
+                </div>
+                <pre {...props} />
+              </div>
+            );
+          },
           code: ({ node, className, children, ...props }) => {
             const language = className?.replace("language-", "") || "plaintext";
             return (
@@ -45,7 +89,9 @@ const MarkdownRenderer = ({ message }: { message: { content: string } }) => {
           ol: ({ node, ...props }) => (
             <ol className="list-decimal list-inside ml-4 mb-4" {...props} />
           ),
-          p: ({ node, ...props }) => <p className="mb-4 first:mt-0" {...props} />,
+          p: ({ node, ...props }) => (
+            <p className="mb-4 first:mt-0" {...props} />
+          ),
           h1: ({ node, ...props }) => (
             <h1
               className="text-3xl font-bold mb-4 mt-6 first:mt-0"
