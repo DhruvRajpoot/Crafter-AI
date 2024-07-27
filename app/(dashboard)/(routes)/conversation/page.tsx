@@ -177,7 +177,10 @@ const ConversationPage = () => {
           )}
 
           {messages.length === 0 && !isLoading && (
-            <Empty label="Start a conversation by entering a prompt above" animationData={animationData}/>
+            <Empty
+              label="Start a conversation by entering a prompt below"
+              animationData={animationData}
+            />
           )}
 
           <div ref={messagesEndRef} />

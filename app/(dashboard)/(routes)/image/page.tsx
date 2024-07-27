@@ -25,6 +25,7 @@ import { Card, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
+import * as animationData from "@/assets/image.json";
 
 const ImagePage = () => {
   const router = useRouter();
@@ -176,7 +177,10 @@ const ImagePage = () => {
           )}
 
           {images.length === 0 && !isLoading && (
-            <Empty label="Create beautiful visuals! Type your request above to begin" />
+            <Empty
+              label="Create beautiful visuals! Type your request below to begin"
+              animationData={animationData}
+            />
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">

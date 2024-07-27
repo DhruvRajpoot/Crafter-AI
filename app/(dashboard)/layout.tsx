@@ -18,7 +18,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
       <main className="md:pl-72">
         <Navbar />
-        <div className="h-[calc(100vh-64px)] flex flex-col gap-4 justify-between pb-[4px] px-4 lg:px-8">
+        <div className="h-[calc(100vh-64px)] flex flex-col gap-4 justify-between pb-[4px] px-3 sm:px-4 lg:px-8">
           {children}
         </div>
       </main>

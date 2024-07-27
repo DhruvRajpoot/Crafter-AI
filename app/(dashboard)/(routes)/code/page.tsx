@@ -19,6 +19,7 @@ import BotAvatar from "@/components/bot-avatar";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
 import MarkdownRenderer from "@/components/markdownRender";
+import * as animationData from "@/assets/code.json";
 
 const CodePage = () => {
   const router = useRouter();
@@ -176,7 +177,10 @@ const CodePage = () => {
           )}
 
           {messages.length === 0 && !isLoading && (
-            <Empty label="Ready to create some code? Type your prompt above to get started!" />
+            <Empty
+              label="Ready to create some code? Type your prompt below to get started!"
+              animationData={animationData}
+            />
           )}
 
           <div ref={messagesEndRef} />

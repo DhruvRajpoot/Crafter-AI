@@ -16,6 +16,7 @@ import Loader from "@/components/loader";
 import Empty from "@/components/empty";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
+import * as animationData from "@/assets/video.json";
 
 const VideoPage = () => {
   const router = useRouter();
@@ -107,7 +108,10 @@ const VideoPage = () => {
           )}
 
           {!video && !isLoading && (
-            <Empty label="Ready to create amazing videos? Type your prompt above to get started!" />
+            <Empty
+              label="Ready to create amazing videos? Type your prompt below to get started!"
+              animationData={animationData}
+            />
           )}
 
           {video && (

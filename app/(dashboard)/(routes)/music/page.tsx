@@ -16,6 +16,7 @@ import Loader from "@/components/loader";
 import Empty from "@/components/empty";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
+import * as animation from "@/assets/music.json";
 
 const MusicPage = () => {
   const router = useRouter();
@@ -107,7 +108,7 @@ const MusicPage = () => {
           )}
 
           {!music && !isLoading && (
-            <Empty label="Let's create some beautiful music! Type your request above to begin" />
+            <Empty label="Let's create some beautiful music! Type your request below to begin" animationData={animation}/>
           )}
 
           {music && (
