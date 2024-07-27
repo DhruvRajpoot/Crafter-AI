@@ -3,20 +3,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 
+const instructionMessage = {
+  role: "system",
+  content:
+    "You are an AI conversational assistant. Engage users with clear, polite, and relevant responses. Provide concise answers and avoid jargon. Be empathetic, friendly, and ask clarifying questions if needed.",
+};
+
 const googleGenerativeAI = new GoogleGenerativeAI(
   process.env.GEMINI_API_KEY as string
 );
 
 const model = googleGenerativeAI.getGenerativeModel({
-  model: "gemini-pro",
+  model: "gemini-1.5-flash",
   generationConfig: {
-    maxOutputTokens: 500,
+    maxOutputTokens: 2000,
+    responseMimeType: "text/plain",
   },
 });
-
-const truncateMessages = (messages: any) => {
-  return messages.slice(Math.max(messages.length - 3, 0));
-};
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,27 +41,36 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Free trial has expired", { status: 403 });
     }
 
-    const truncatedMessages = truncateMessages(messages);
+    messages.push(instructionMessage);
 
-    const prompt = truncatedMessages
-      .map(
-        (msg: { role: string; content: string }) =>
-          `${msg.role}: ${msg.content}`
-      )
-      .join("\n");
+    const prompt = messages.map((msg: any) => msg.content).join("\n");
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const output = response.text();
+    const result = await model.generateContentStream(prompt);
 
-    const systemMessage = {
-      role: "system",
-      content: output,
-    };
+    const readableStream = new ReadableStream({
+      start(controller) {
+        (async () => {
+          try {
+            for await (const chunk of result.stream) {
+              const chunkText = await chunk.text();
+              controller.enqueue(chunkText);
+            }
+            controller.close();
+          } catch (err) {
+            console.error("Stream error:", err);
+            controller.error(err);
+          }
+        })();
+      },
+    });
 
     await increaseApiLimit(userId);
 
-    return NextResponse.json(systemMessage);
+    return new NextResponse(readableStream, {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
   } catch (error) {
     console.log("[Conversation Error]", error);
     return new NextResponse("Internal Server Error", { status: 500 });

@@ -14,10 +14,11 @@ const googleGenerativeAI = new GoogleGenerativeAI(
 );
 
 const model = googleGenerativeAI.getGenerativeModel({
-  model: "gemini-pro",
-  // generationConfig: {
-  //   maxOutputTokens: 300,
-  // },
+  model: "gemini-1.5-flash",
+  generationConfig: {
+    maxOutputTokens: 2000,
+    responseMimeType: "text/plain",
+  },
 });
 
 export async function POST(req: NextRequest) {
@@ -42,27 +43,36 @@ export async function POST(req: NextRequest) {
 
     messages.push(instructionMessage);
 
-    const prompt = messages
-      .map(
-        (msg: { role: string; content: string }) =>
-          `${msg.role}: ${msg.content}`
-      )
-      .join("\n");
+    const prompt = messages.map((msg: any) => msg.content).join("\n");
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const output = response.text();
+    const result = await model.generateContentStream(prompt);
 
-    const systemMessage = {
-      role: "system",
-      content: output,
-    };
-    
+    const readableStream = new ReadableStream({
+      start(controller) {
+        (async () => {
+          try {
+            for await (const chunk of result.stream) {
+              const chunkText = await chunk.text();
+              controller.enqueue(chunkText);
+            }
+            controller.close();
+          } catch (err) {
+            console.error("Stream error:", err);
+            controller.error(err);
+          }
+        })();
+      },
+    });
+
     await increaseApiLimit(userId);
 
-    return NextResponse.json(systemMessage);
+    return new NextResponse(readableStream, {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
   } catch (error) {
-    console.log("[Code Error]", error);
+    console.error("[Code Error]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

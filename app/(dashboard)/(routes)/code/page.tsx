@@ -11,13 +11,12 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { cn } from "@/lib/utils";
 import Loader from "@/components/loader";
 import Empty from "@/components/empty";
 import UserAvatar from "@/components/user-avatar";
 import BotAvatar from "@/components/bot-avatar";
-import MarkdownRenderer from "./markdownRender";
+import MarkdownRenderer from "@/components/markdownRender";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
 
@@ -25,6 +24,8 @@ const CodePage = () => {
   const router = useRouter();
   const { handleProModal } = useAppContext();
   const [messages, setMessages] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseContent, setResponseContent] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -33,8 +34,6 @@ const CodePage = () => {
     },
   });
 
-  const isLoading = form.formState.isSubmitting;
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const userMessage = {
@@ -42,13 +41,44 @@ const CodePage = () => {
         content: values.prompt,
       };
 
-      const newMessages = [...messages, userMessage];
+      setMessages((currentMessages) => [...currentMessages, userMessage]);
 
-      const response = await axios.post("/api/code", {
-        messages: newMessages,
+      setIsLoading(true);
+
+      setResponseContent("");
+
+      const response = await fetch("/api/code", {
+        method: "POST",
+        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
-      setMessages((current) => [...current, userMessage, response.data]);
+      if (!response.ok) {
+        throw new Error("Network response was not ok.");
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let partialResponse = "";
+
+      while (true) {
+        const { done, value } = (await reader?.read()) || {
+          done: true,
+          value: new Uint8Array(),
+        };
+        if (done) break;
+
+        partialResponse += decoder.decode(value, { stream: true });
+
+        setResponseContent(partialResponse);
+      }
+
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        { role: "system", content: partialResponse },
+      ]);
 
       form.reset();
     } catch (error: any) {
@@ -63,6 +93,7 @@ const CodePage = () => {
         toast.error(message);
       }
     } finally {
+      setIsLoading(false);
       router.refresh();
     }
   };
@@ -133,9 +164,20 @@ const CodePage = () => {
               >
                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
 
-                <MarkdownRenderer message={message} />
+                {message.role === "user" ? (
+                  <p className="my-auto">{message.content}</p>
+                ) : (
+                  <MarkdownRenderer message={message} />
+                )}
               </div>
             ))}
+
+            {isLoading && responseContent && (
+              <div className="px-8 py-5 w-full flex items-start gap-x-8 rounded-lg bg-muted">
+                <BotAvatar />
+                <MarkdownRenderer message={{ content: responseContent }} />
+              </div>
+            )}
           </div>
         </div>
       </div>
