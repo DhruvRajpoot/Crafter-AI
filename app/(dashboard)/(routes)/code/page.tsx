@@ -129,58 +129,17 @@ const CodePage = () => {
   }, [messages, responseContent, isLoading, shouldScroll]);
 
   return (
-    <div>
-      <Heading
-        title="Code Generation"
-        description="Generate code using descriptive text"
-        icon={Code}
-        iconColor="text-green-700"
-        bgColor="bg-green-700/10"
-      />
-
-      <div className="px-4 lg:px-8">
-        <div className="sticky top-0 bg-white border-b border-gray-200 shadow-md z-10 rounded-lg">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-3"
-            >
-              <FormField
-                name="prompt"
-                render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0 px-3">
-                      <Input
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading}
-                        placeholder="How to generate a random number in JavaScript?"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button
-                className="col-span-12 lg:col-span-2 w-full"
-                disabled={isLoading}
-              >
-                Generate
-              </Button>
-            </form>
-          </Form>
-        </div>
+    <>
+      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar">
+        <Heading
+          title="Code Generation"
+          description="Generate code using descriptive text"
+          icon={Code}
+          iconColor="text-green-700"
+          bgColor="bg-green-700/10"
+        />
 
         <div className="space-y-4 mt-4" onScroll={handleScroll}>
-          {isLoading && (
-            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
-              <Loader />
-            </div>
-          )}
-
-          {messages.length === 0 && !isLoading && (
-            <Empty label="Ready to create some code? Type your prompt above to get started!" />
-          )}
-
           <div className="flex flex-col gap-y-4">
             {messages.map((message, index) => (
               <div
@@ -209,10 +168,52 @@ const CodePage = () => {
               </div>
             )}
           </div>
+
+          {isLoading && (
+            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+              <Loader />
+            </div>
+          )}
+
+          {messages.length === 0 && !isLoading && (
+            <Empty label="Ready to create some code? Type your prompt above to get started!" />
+          )}
+
           <div ref={messagesEndRef} />
         </div>
       </div>
-    </div>
+
+      <div className=" bg-white border-b border-gray-200 shadow-md z-10 rounded-lg mt-auto">
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-3"
+          >
+            <FormField
+              name="prompt"
+              render={({ field }) => (
+                <FormItem className="col-span-12 lg:col-span-10">
+                  <FormControl className="m-0 p-0 px-3">
+                    <Input
+                      className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                      disabled={isLoading}
+                      placeholder="How to generate a random number in JavaScript?"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button
+              className="col-span-12 lg:col-span-2 w-full"
+              disabled={isLoading}
+            >
+              Generate
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 };
 

@@ -11,20 +11,16 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const apiLimitCount = await getApiLimitCount(userId as string);
 
   return (
-    <div
-      className="h-full relative overflow-y-scroll"
-      style={{
-        scrollbarWidth: "thin",
-        scrollbarColor: "#111827 #9ca3af",
-      }}
-    >
+    <div className="h-full relative dashboardpage">
       <div className="hidden h-full md:flex md:flex-col md:w-72 md:fixed md:inset-y-0 bg-gray-900">
         <Sidebar apiLimitCount={apiLimitCount} />
       </div>
 
-      <main className="md:pl-72 pb-4">
+      <main className="md:pl-72">
         <Navbar />
-        {children}
+        <div className="h-[calc(100vh-64px)] flex flex-col gap-4 justify-between pb-[4px] px-4 lg:px-8">
+          {children}
+        </div>
       </main>
 
       <ProModal />
