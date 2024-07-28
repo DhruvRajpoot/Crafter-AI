@@ -23,3 +23,11 @@ model UserConversation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model UserCode {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  codes Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
