@@ -7,9 +7,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Loader from "@/components/loader";
@@ -17,6 +14,7 @@ import Empty from "@/components/empty";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
 import * as animationData from "@/assets/video.json";
+import PromptForm from "../../promptInput";
 
 const VideoPage = () => {
   const router = useRouter();
@@ -59,48 +57,27 @@ const VideoPage = () => {
   };
 
   return (
-    <div>
-      <Heading
-        title="Video Generation"
-        description="Generate video based on your prompts"
-        icon={VideoIcon}
-        iconColor="text-orange-700"
-        bgColor="bg-orange-700/10"
-      />
-
-      <div className="px-4 lg:px-8">
-        <div>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-3"
-            >
-              <FormField
-                name="prompt"
-                render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0 px-3">
-                      <Input
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading}
-                        placeholder="An astronaut floating in space"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button
-                className="col-span-12 lg:col-span-2 w-full"
-                disabled={isLoading}
-              >
-                Generate
-              </Button>
-            </form>
-          </Form>
-        </div>
+    <>
+      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar">
+        <Heading
+          title="Video Generation"
+          description="Generate video based on your prompts"
+          icon={VideoIcon}
+          iconColor="text-orange-700"
+          bgColor="bg-orange-700/10"
+        />
 
         <div className="space-y-4 mt-4">
+          {video && (
+            <video
+              className="w-full aspect-auto mt-8 rounded-lg
+             border p-2 lg:p-8"
+              controls
+            >
+              <source src={video} />
+            </video>
+          )}
+
           {isLoading && (
             <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
               <Loader />
@@ -113,19 +90,11 @@ const VideoPage = () => {
               animationData={animationData}
             />
           )}
-
-          {video && (
-            <video
-              className="w-full aspect-auto mt-8 rounded-lg
-             border p-2 lg:p-8"
-              controls
-            >
-              <source src={video} />
-            </video>
-          )}
         </div>
       </div>
-    </div>
+
+      <PromptForm form={form} onSubmit={onSubmit} isLoading={isLoading} />
+    </>
   );
 };
 

@@ -7,9 +7,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Loader from "@/components/loader";
@@ -17,6 +14,7 @@ import Empty from "@/components/empty";
 import { useAppContext } from "@/context/appContext";
 import toast from "react-hot-toast";
 import * as animation from "@/assets/music.json";
+import PromptForm from "../../promptInput";
 
 const MusicPage = () => {
   const router = useRouter();
@@ -59,46 +57,15 @@ const MusicPage = () => {
   };
 
   return (
-    <div>
-      <Heading
-        title="Music Generation"
-        description="Generate music based on your prompts"
-        icon={Music}
-        iconColor="text-pink-500"
-        bgColor="bg-pink-500/10"
-      />
-
-      <div className="px-4 lg:px-8">
-        <div>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-3"
-            >
-              <FormField
-                name="prompt"
-                render={({ field }) => (
-                  <FormItem className="col-span-12 lg:col-span-10">
-                    <FormControl className="m-0 p-0 px-3">
-                      <Input
-                        className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading}
-                        placeholder="A happy tune with a catchy melody"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <Button
-                className="col-span-12 lg:col-span-2 w-full"
-                disabled={isLoading}
-              >
-                Generate
-              </Button>
-            </form>
-          </Form>
-        </div>
+    <>
+      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar">
+        <Heading
+          title="Music Generation"
+          description="Generate music based on your prompts"
+          icon={Music}
+          iconColor="text-pink-500"
+          bgColor="bg-pink-500/10"
+        />
 
         <div className="space-y-4 mt-4">
           {isLoading && (
@@ -108,7 +75,10 @@ const MusicPage = () => {
           )}
 
           {!music && !isLoading && (
-            <Empty label="Let's create some beautiful music! Type your request below to begin" animationData={animation}/>
+            <Empty
+              label="Let's create some beautiful music! Type your request below to begin"
+              animationData={animation}
+            />
           )}
 
           {music && (
@@ -118,7 +88,9 @@ const MusicPage = () => {
           )}
         </div>
       </div>
-    </div>
+
+      <PromptForm form={form} onSubmit={onSubmit} isLoading={isLoading} />
+    </>
   );
 };
 
