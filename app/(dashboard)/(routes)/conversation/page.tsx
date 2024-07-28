@@ -1,6 +1,6 @@
 "use client";
 
-import Heading from "@/components/heading";
+import Heading from "@/app/(dashboard)/heading";
 import { MessageSquare } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";

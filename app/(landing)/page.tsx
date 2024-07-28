@@ -1,6 +1,6 @@
-import LandingContent from "@/components/landing-content";
-import LandingHero from "@/components/landing-hero";
-import LandingNavbar from "@/components/landing-navbar";
+import LandingContent from "./landing-content";
+import LandingHero from "./landing-hero";
+import LandingNavbar from "./landing-navbar";
 
 const LandingPage = () => {
   return (
