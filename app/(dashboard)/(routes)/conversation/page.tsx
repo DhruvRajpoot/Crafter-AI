@@ -23,9 +23,10 @@ const ConversationPage = () => {
   const router = useRouter();
   const { handleProModal } = useAppContext();
   const [messages, setMessages] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [responseContent, setResponseContent] = useState<string>("");
-  const [shouldScroll, setShouldScroll] = useState(false);
+  const [shouldScroll, setShouldScroll] = useState<boolean>(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollTopRef = useRef<number>(0);
 
@@ -62,11 +63,8 @@ const ConversationPage = () => {
       };
 
       setMessages((currentMessages) => [...currentMessages, userMessage]);
-
       setIsLoading(true);
-
       setShouldScroll(true);
-
       setResponseContent("");
 
       const response = await fetch("/api/conversation", {
@@ -102,10 +100,28 @@ const ConversationPage = () => {
         setResponseContent(partialResponse);
       }
 
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        { role: "system", content: partialResponse },
-      ]);
+      const systemMessage = { role: "system", content: partialResponse };
+
+      const saveConversation = async () => {
+        try {
+          await fetch("/api/conversation/save", {
+            method: "POST",
+            body: JSON.stringify({
+              conversations: [...messages, userMessage, systemMessage],
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        } catch (error) {
+          console.error("[Save Conversation Error]", error);
+          toast.error("Failed to save conversation.");
+        }
+      };
+
+      saveConversation();
+
+      setMessages((currentMessages) => [...currentMessages, systemMessage]);
 
       form.reset();
     } catch (error: any) {
@@ -122,6 +138,33 @@ const ConversationPage = () => {
       router.refresh();
     }
   };
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        setInitialLoading(true);
+        const response = await fetch("/api/conversation/get");
+        if (!response.ok) {
+          const errorData = await response.json();
+          const error = new Error(
+            errorData.message || "An error occurred while fetching data."
+          );
+          (error as any).status = response.status;
+          throw error;
+        }
+        const data = await response.json();
+        setMessages(data);
+        setShouldScroll(true);
+      } catch (error: any) {
+        console.error("[Get Conversations Error]", error);
+        toast.error(error.message || "An error occurred while fetching data.");
+      } finally {
+        setInitialLoading(false);
+      }
+    };
+
+    fetchMessages();
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
@@ -174,7 +217,7 @@ const ConversationPage = () => {
             </div>
           )}
 
-          {messages.length === 0 && !isLoading && (
+          {(messages.length === 0 || initialLoading) && !isLoading && (
             <Empty
               label="Start a conversation by entering a prompt below"
               animationData={animationData}
