@@ -1,15 +1,17 @@
-import LandingContent from "@/components/landing-content";
-import LandingHero from "@/components/landing-hero";
-import LandingNavbar from "@/components/landing-navbar";
+import LandingContent from "./landing-content";
+import LandingFooter from "./landing-footer";
+import LandingHero from "./landing-hero";
+import LandingNavbar from "./landing-navbar";
 
 const LandingPage = () => {
   return (
-    <div className="h-full bg-[#111827] overflow-auto homepage">
-      <div className="mx-auto max-w-screen-xl h-full">
+    <div className="bg-[#111827] overflow-auto">
+      <div className="mx-auto max-w-screen-xl">
         <LandingNavbar />
         <LandingHero />
         <LandingContent />
       </div>
+      <LandingFooter />
     </div>
   );
 };

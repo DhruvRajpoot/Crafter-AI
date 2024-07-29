@@ -65,7 +65,7 @@ const ProModal = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="flex justify-center items-center gap-x-2 font-bold">
-            Upgrade to Pro
+            Upgrade to
             <Badge variant={"premium"} className="text-sm py-1">
               PRO
             </Badge>
@@ -88,6 +88,10 @@ const ProModal = () => {
               <Check className="text-primary w-5 h-5" />
             </Card>
           ))}
+
+          <DialogDescription>
+            Unlimited access to all the tools for your creative needs.
+          </DialogDescription>
         </div>
 
         <DialogFooter>
