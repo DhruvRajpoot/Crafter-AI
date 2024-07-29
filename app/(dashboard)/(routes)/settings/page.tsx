@@ -33,7 +33,7 @@ const SettingsPage = () => {
       />
 
       <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-8 md:flex-row md:gap-8">
+        <div className="flex flex-col gap-8 lg:flex-row md:gap-8">
           <section className="bg-white shadow-md rounded-lg p-6 flex-1">
             <h2 className="text-xl font-semibold mb-4">Manage Subscription</h2>
             <div className="flex flex-col gap-4">
@@ -70,7 +70,7 @@ const SettingsPage = () => {
 
           <section className="bg-white shadow-md rounded-lg p-6 flex-1">
             <h2 className="text-xl font-semibold mb-4">User Profile</h2>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-4">
               <Avatar className="w-16 h-16">
                 {user?.imageUrl ? (
                   <AvatarImage src={user.imageUrl} alt="User Profile Image" />
@@ -94,7 +94,7 @@ const SettingsPage = () => {
                   <label className="text-sm font-medium text-gray-700">
                     Email
                   </label>
-                  <p className="text-base text-gray-900">
+                  <p className="text-base text-gray-900 break-all">
                     {user?.emailAddresses[0]?.emailAddress ||
                       "johndoe@gmail.com"}
                   </p>
