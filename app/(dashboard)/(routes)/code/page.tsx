@@ -107,7 +107,7 @@ const CodePage = () => {
           await fetch("/api/code/save", {
             method: "POST",
             body: JSON.stringify({
-              conversations: [...messages, userMessage, systemMessage],
+              codes: [...messages, userMessage, systemMessage],
             }),
             headers: {
               "Content-Type": "application/json",
