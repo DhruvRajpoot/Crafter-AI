@@ -1,3 +1,4 @@
+import LandingAbout from "./landing-about";
 import LandingContent from "./landing-content";
 import LandingFooter from "./landing-footer";
 import LandingHero from "./landing-hero";
@@ -9,6 +10,7 @@ const LandingPage = () => {
       <div className="mx-auto max-w-screen-xl">
         <LandingNavbar />
         <LandingHero />
+        <LandingAbout />
         <LandingContent />
       </div>
       <LandingFooter />
