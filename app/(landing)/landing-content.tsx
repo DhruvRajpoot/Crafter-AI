@@ -36,14 +36,14 @@ const testimonials = [
 const LandingContent = () => {
   return (
     <div className="p-6 bg-gray-900">
-      <h2 className="text-center text-4xl text-white font-extrabold mb-10">
+      <h2 className="text-center text-3xl sm:text-5xl text-white font-bold mb-14">
         What Our Users Say
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {testimonials.map((testimonial, index) => (
           <Card
             key={index}
-            className="bg-gray-800 border border-gray-700 text-white rounded-lg shadow-lg"
+            className="bg-gray-800 border border-gray-700 text-white rounded-lg"
           >
             <CardHeader>
               <div className="flex items-center gap-4">

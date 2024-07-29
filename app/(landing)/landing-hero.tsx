@@ -9,43 +9,45 @@ const LandingHero = () => {
   const { isSignedIn } = useAuth();
 
   return (
-    <div className="text-white font-bold pt-36 pb-16 text-center space-y-5">
-      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl space-y-5 font-extrabold">
-        <h1>The best AI tool for </h1>
-        <div className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 h-12 sm:h-14 md:h-16 lg:h-20">
+    <div className="flex flex-col items-center justify-center text-white px-2 pt-20 sm:pt-36 pb-10 space-y-5 md:space-y-7 text-center">
+      <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+        <h1 className="mb-4 lg:mb-10">Discover the Power of</h1>
+        <div className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-500  h-12 sm:h-14 md:h-16 lg:h-20">
           <TypewriterComponent
             options={{
               strings: [
-                "Conversation",
+                "AI Conversations",
                 "Code Generation",
-                "Image Generation",
-                "Video Generation",
-                "Music Generation",
+                "Image Creation",
+                "Video Production",
+                "Music Composition",
               ],
               autoStart: true,
               loop: true,
+              delay: 75,
+              cursor: "|",
             }}
           />
         </div>
       </div>
-      <div className="text-sm md:text-xl font-light text-zinc-400">
-        All-in-one AI tool for your creative needs. Get started now!
-      </div>
 
-      <div>
-        <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
-          <Button
-            variant={"premium"}
-            className="md:text-lg p-4 md:p-6 rounded-full font-semibold"
-          >
-            Try for free
-          </Button>
-        </Link>
-      </div>
+      <p className="text-base md:text-lg font-light text-gray-300">
+        Revolutionize your creative process with our all-in-one AI tool. Get
+        started today!
+      </p>
 
-      <div className="text-zinc-400 text-xs md:text-sm font-normal">
+      <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
+        <Button
+          variant={"premium"}
+          className="md:text-lg p-4 md:p-6 rounded-full font-semibold"
+        >
+          Try for free
+        </Button>
+      </Link>
+
+      <p className="text-xs md:text-sm font-normal text-gray-400">
         No credit card required. Cancel anytime.
-      </div>
+      </p>
     </div>
   );
 };

@@ -1,7 +1,14 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@clerk/nextjs";
+import Link from "next/link";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import Image from "next/image";
 
 const LandingFooter = () => {
+  const { isSignedIn } = useAuth();
+
   const quickLinks = [
     {
       name: "Home",
@@ -58,6 +65,12 @@ const LandingFooter = () => {
             Leveraging advanced AI technologies to generate text, audio, video,
             and images. Innovative solutions for modern needs.
           </p>
+
+          <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
+            <Button variant="default" className="mt-6 rounded-full">
+              {isSignedIn ? "Dashboard" : "Get Started"}
+            </Button>
+          </Link>
         </div>
 
         <div className="flex flex-col items-start md:mx-auto">
