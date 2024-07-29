@@ -157,7 +157,11 @@ const CodePage = () => {
         setShouldScroll(true);
       } catch (error: any) {
         console.error("[Get Codes Error]", error);
-        toast.error(error.message || "An error occurred while fetching data.");
+        if (error?.status !== 404) {
+          toast.error(
+            error.message || "An error occurred while fetching data."
+          );
+        }
       } finally {
         setInitialLoading(false);
       }
