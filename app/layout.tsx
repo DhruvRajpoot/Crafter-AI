@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { AppContextProvider } from "@/context/appContext";
 import ToastProvider from "@/components/toast-provider";
 import { CrispProvider } from "@/components/crisp";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
           <body className={inter.className}>
             <ToastProvider />
             {children}
+            <SpeedInsights />
           </body>
         </html>
       </AppContextProvider>

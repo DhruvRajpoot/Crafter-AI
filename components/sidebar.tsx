@@ -69,9 +69,10 @@ const routes = [
 
 interface SidebarProps {
   apiLimitCount: number;
+  onLinkClick?: () => void;
 }
 
-const Sidebar = ({ apiLimitCount }: SidebarProps) => {
+const Sidebar = ({ apiLimitCount, onLinkClick }: SidebarProps) => {
   const pathname = usePathname();
 
   return (
@@ -92,6 +93,7 @@ const Sidebar = ({ apiLimitCount }: SidebarProps) => {
             <Link
               key={route.href}
               href={route.href}
+              onClick={() => onLinkClick && onLinkClick()}
               className={cn(
                 "text-sm group flex p-3 w-full justify-start font-medium rounded-lg transition cursor-pointer hover:text-white hover:bg-white/10",
                 pathname === route.href
