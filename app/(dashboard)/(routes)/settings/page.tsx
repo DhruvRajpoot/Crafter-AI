@@ -1,6 +1,16 @@
 "use client";
 
-import { Check, Settings, TicketCheck, Trash2, User, Zap } from "lucide-react";
+import {
+  Check,
+  Monitor,
+  Moon,
+  Settings,
+  Sun,
+  TicketCheck,
+  Trash2,
+  User,
+  Zap,
+} from "lucide-react";
 import Heading from "../../heading";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -35,7 +45,7 @@ const SettingsPage = () => {
 
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-8 lg:flex-row md:gap-8">
-          <section className="bg-white shadow-md rounded-lg p-6 flex-1">
+          <section className="bg-white shadow-md rounded-lg border border-gray-100 p-6 flex-1">
             <h2 className="text-xl font-semibold mb-4">Manage Subscription</h2>
             <div className="flex flex-col gap-4">
               {subscriptionPlan === "free" ? (
@@ -69,7 +79,7 @@ const SettingsPage = () => {
             </div>
           </section>
 
-          <section className="bg-white shadow-md rounded-lg p-6 flex-1">
+          <section className="bg-white shadow-md rounded-lg border border-gray-100 p-6 flex-1">
             <h2 className="text-xl font-semibold mb-4">User Profile</h2>
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <Avatar className="w-16 h-16 mx-auto sm:mx-0">
@@ -105,7 +115,7 @@ const SettingsPage = () => {
           </section>
         </div>
 
-        <section className="bg-white shadow-md rounded-lg p-6">
+        <section className="bg-white shadow-md rounded-lg border border-gray-100 p-6">
           <h2 className="text-xl font-semibold mb-4">Theme</h2>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -119,6 +129,16 @@ const SettingsPage = () => {
                   }`}
                   onClick={() => handleThemeChange(currentTheme)}
                 >
+                  <span className="w-5 h-5 flex items-center justify-center mr-3">
+                    {currentTheme === "system" ? (
+                      <Monitor />
+                    ) : currentTheme === "light" ? (
+                      <Sun />
+                    ) : (
+                      <Moon />
+                    )}
+                  </span>
+
                   <span className="flex-1">
                     {currentTheme.charAt(0).toUpperCase() +
                       currentTheme.slice(1)}
@@ -134,7 +154,7 @@ const SettingsPage = () => {
           </div>
         </section>
 
-        <section className="bg-white shadow-md rounded-lg p-6 mb-6">
+        <section className="bg-white shadow-md rounded-lg border border-gray-100 p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Delete Account</h2>
           <Button
             variant="destructive"

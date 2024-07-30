@@ -191,7 +191,7 @@ const CodePage = () => {
               <div
                 key={index}
                 className={cn(
-                  "px-8 py-5 w-full flex items-start gap-x-8 rounded-lg",
+                  "px-2 sm:px-8 py-5 w-full flex items-start gap-x-2 sm:gap-x-8 rounded-lg",
                   message.role === "user"
                     ? "bg-white border border-black/10"
                     : "bg-muted"
