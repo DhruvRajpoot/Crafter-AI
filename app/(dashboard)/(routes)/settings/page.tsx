@@ -3,18 +3,19 @@
 import { Check, Settings, TicketCheck, Trash2, User, Zap } from "lucide-react";
 import Heading from "../../heading";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import DeleteAccountModal from "./delete-account-modal";
 
 const SettingsPage = () => {
   const { user } = useUser();
 
   const [theme, setTheme] = useState("system");
   const [subscriptionPlan, setSubscriptionPlan] = useState("free");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleThemeChange = (newTheme: string) => {
+  const handleThemeChange = (newTheme: any) => {
     setTheme(newTheme);
   };
 
@@ -135,11 +136,20 @@ const SettingsPage = () => {
 
         <section className="bg-white shadow-md rounded-lg p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4">Delete Account</h2>
-          <Button variant="destructive">
+          <Button
+            variant="destructive"
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2"
+          >
             <Trash2 className="mr-2" /> Delete Account
           </Button>
         </section>
       </div>
+
+      <DeleteAccountModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </div>
   );
 };
