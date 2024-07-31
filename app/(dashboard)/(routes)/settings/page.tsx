@@ -115,27 +115,29 @@ const SettingsPage = () => {
           </section>
         </div>
 
-        <section className="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-100 dark:border-gray-700 p-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-            Theme
-          </h2>
-          <div className="flex flex-col gap-4">
-            <ThemeToggle />
-          </div>
-        </section>
+        <div className="flex flex-col gap-8 lg:flex-row md:gap-8 mb-6">
+          <section className="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-100 dark:border-gray-700 p-6 flex-1">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+              Theme
+            </h2>
+            <div className="flex flex-col gap-4">
+              <ThemeToggle />
+            </div>
+          </section>
 
-        <section className="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-100 dark:border-gray-700 p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-            Delete Account
-          </h2>
-          <Button
-            variant="destructive"
-            onClick={() => setIsDeleteModalOpen(true)}
-            className="flex items-center gap-2"
-          >
-            <Trash2 className="mr-2" /> Delete Account
-          </Button>
-        </section>
+          <section className="bg-white dark:bg-gray-800 shadow-md rounded-lg border border-gray-100 dark:border-gray-700 p-6 flex-1">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+              Delete Account
+            </h2>
+            <Button
+              variant="destructive"
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="flex items-center gap-2"
+            >
+              <Trash2 className="mr-2" /> Delete Account
+            </Button>
+          </section>
+        </div>
       </div>
 
       <DeleteAccountModal

@@ -12,7 +12,7 @@ const AppContext = createContext<any>(undefined);
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<string>(() => {
-    return localStorage.getItem("theme") || "light";
+    return localStorage.getItem("theme") || "system";
   });
 
   useEffect(() => {
