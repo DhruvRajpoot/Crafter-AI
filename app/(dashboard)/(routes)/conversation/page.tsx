@@ -176,7 +176,7 @@ const ConversationPage = () => {
 
   return (
     <>
-      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar">
+      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar bg-background dark:bg-background-dark text-foreground dark:text-foreground">
         <Heading
           title="Conversation"
           description="Generate text using AI"
@@ -193,8 +193,8 @@ const ConversationPage = () => {
                 className={cn(
                   "px-2 sm:px-8 py-5 w-full flex items-start gap-x-2 sm:gap-x-8 rounded-lg",
                   message.role === "user"
-                    ? "bg-white border border-black/10"
-                    : "bg-muted"
+                    ? "bg-white border border-black/10 dark:bg-gray-700 dark:border-gray-600"
+                    : "bg-muted dark:bg-gray-600"
                 )}
               >
                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
@@ -208,7 +208,7 @@ const ConversationPage = () => {
             ))}
 
             {isLoading && responseContent && (
-              <div className="px-8 py-5 w-full flex items-start gap-x-8 rounded-lg bg-muted">
+              <div className="px-8 py-5 w-full flex items-start gap-x-8 rounded-lg bg-muted dark:bg-gray-600">
                 <BotAvatar />
                 <MarkdownRenderer message={{ content: responseContent }} />
               </div>
@@ -216,7 +216,7 @@ const ConversationPage = () => {
           </div>
 
           {isLoading && (
-            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted">
+            <div className="p-8 rounded-lg w-full flex items-center justify-center bg-muted dark:bg-gray-600">
               <Loader />
             </div>
           )}
