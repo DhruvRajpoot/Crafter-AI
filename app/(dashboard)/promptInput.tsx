@@ -19,7 +19,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
   onSubmit,
 }) => {
   return (
-    <div className=" bg-white border-b border-gray-200 shadow-md z-10 rounded-lg">
+    <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-md z-10 rounded-lg">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -31,7 +31,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
               <FormItem className="col-span-12 lg:col-span-9">
                 <FormControl className="m-0 p-0 px-3">
                   <Input
-                    className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+                    className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                     disabled={isLoading}
                     placeholder="How to generate a random number in JavaScript?"
                     {...field}

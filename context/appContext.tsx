@@ -1,10 +1,36 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
 const AppContext = createContext<any>(undefined);
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<string>(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  useEffect(() => {
+    applyTheme(theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const applyTheme = (theme: string) => {
+    if (theme === "system") {
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      document.documentElement.classList.toggle("dark", systemPrefersDark);
+    } else {
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }
+  };
+
   const [isProModalOpen, setIsProModalOpen] = useState<boolean>(false);
 
   const handleProModal = () => {
@@ -12,7 +38,14 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AppContext.Provider value={{ isProModalOpen, handleProModal }}>
+    <AppContext.Provider
+      value={{
+        isProModalOpen,
+        handleProModal,
+        theme,
+        setTheme,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

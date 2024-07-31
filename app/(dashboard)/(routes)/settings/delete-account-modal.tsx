@@ -44,13 +44,13 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogOverlay className="fixed inset-0 bg-black/10" />
+      <DialogOverlay className="fixed inset-0 bg-black/30 dark:bg-black/70" />
 
-      <DialogContent className="fixed inset-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-sm w-full h-fit bg-white rounded-lg shadow-lg p-6 z-50">
-        <DialogTitle className="text-xl font-semibold mb-4">
+      <DialogContent className="fixed inset-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-sm w-full h-fit bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 z-50">
+        <DialogTitle className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
           Confirm Deletion
         </DialogTitle>
-        <DialogDescription className="text-gray-700 mb-6">
+        <DialogDescription className="text-gray-700 dark:text-gray-300 mb-6">
           Are you sure you want to delete your account permanently? This action
           cannot be undone.
         </DialogDescription>

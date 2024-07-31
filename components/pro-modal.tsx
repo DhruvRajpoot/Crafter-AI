@@ -64,7 +64,7 @@ const ProModal = () => {
     <Dialog open={isProModalOpen} onOpenChange={handleProModal}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="flex justify-center items-center gap-x-2 font-bold">
+          <DialogTitle className="flex justify-center items-center gap-x-2 font-bold text-gray-900 dark:text-gray-100">
             Upgrade to
             <Badge variant={"premium"} className="text-sm py-1">
               PRO
@@ -72,11 +72,11 @@ const ProModal = () => {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="text-center pt-2 space-y-2 text-zinc-900 font-medium">
+        <div className="text-center pt-2 space-y-2 text-zinc-900 dark:text-gray-300 font-medium">
           {tools.map((tool, index) => (
             <Card
               key={index}
-              className="flex items-center justify-between p-3 border-black/5"
+              className="flex items-center justify-between p-3 border-gray-200 dark:border-gray-700"
             >
               <div className="flex items-center gap-x-4">
                 <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
@@ -89,7 +89,7 @@ const ProModal = () => {
             </Card>
           ))}
 
-          <DialogDescription>
+          <DialogDescription className="text-gray-700 dark:text-gray-400">
             Unlimited access to all the tools for your creative needs.
           </DialogDescription>
         </div>

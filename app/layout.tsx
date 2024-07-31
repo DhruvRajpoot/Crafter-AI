@@ -5,8 +5,8 @@ import "@/styles/index.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AppContextProvider } from "@/context/appContext";
 import ToastProvider from "@/components/toast-provider";
-import { CrispProvider } from "@/components/crisp";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+// import { CrispProvider } from "@/components/crisp";
+// import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,11 +25,11 @@ export default function RootLayout({
     <ClerkProvider>
       <AppContextProvider>
         <html lang="en">
-          <CrispProvider />
+          {/* <CrispProvider /> */}
           <body className={inter.className}>
             <ToastProvider />
             {children}
-            <SpeedInsights />
+            {/* <SpeedInsights /> */}
           </body>
         </html>
       </AppContextProvider>
