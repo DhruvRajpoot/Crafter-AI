@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Custom404Page = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-800 via-gray-700 to-gray-600 text-gray-200 p-8">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-gray-200 p-8">
       <div className="flex flex-col items-center mb-12">
         <Image
           src="/logo.png"
@@ -27,7 +27,7 @@ const Custom404Page = () => {
         </p>
         <Link
           href="/"
-          className="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-400 text-white font-semibold rounded-lg shadow-lg"
+          className="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-400 text-white font-semibold rounded-lg shadow-lg hover:bg-teal-600"
         >
           Go to Home
         </Link>
