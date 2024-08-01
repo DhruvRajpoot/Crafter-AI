@@ -1,7 +1,7 @@
-import { UserButton } from "@clerk/nextjs";
 import MobileSidebar from "./mobile-sidebar";
 import { getApiLimitCount } from "@/lib/api-limit";
 import { auth } from "@clerk/nextjs/server";
+import UserButtonClerk from "./user-button-clerk";
 
 const Navbar = async () => {
   const { userId } = auth();
@@ -12,7 +12,7 @@ const Navbar = async () => {
       <MobileSidebar apiLimitCount={apiLimitCount} />
 
       <div className="flex w-full justify-end">
-        <UserButton afterSwitchSessionUrl="/" showName />
+        <UserButtonClerk />
       </div>
     </div>
   );

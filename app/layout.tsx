@@ -22,7 +22,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        layout: {
+          logoImageUrl: "/logo.png",
+          logoLinkUrl: "/",
+        },
+      }}
+    >
       <AppContextProvider>
         <html lang="en">
           {/* <CrispProvider /> */}
