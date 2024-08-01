@@ -107,7 +107,12 @@ const ImagePage = () => {
         </div>
       </div>
 
-      <PromptForm form={form} onSubmit={onSubmit} isLoading={isLoading} />
+      <PromptForm
+        form={form}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        placeholder="Create a serene landscape with rolling hills, a sunset sky, and a calm lake."
+      />
     </>
   );
 };

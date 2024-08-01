@@ -89,7 +89,12 @@ const MusicPage = () => {
         </div>
       </div>
 
-      <PromptForm form={form} onSubmit={onSubmit} isLoading={isLoading} />
+      <PromptForm
+        form={form}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        placeholder="Compose a relaxing ambient track with gentle piano melodies and soothing strings."
+      />
     </>
   );
 };

@@ -18,12 +18,14 @@ const Empty: React.FC<EmptyProps> = ({ label, animationData }) => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full py-10">
-      <div className="relative h-64 w-64 flex items-center justify-center bg-gray-800 rounded-lg pointer-events-none">
+      <div className="relative h-64 w-64 flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded-lg pointer-events-none">
         <div className="flex items-center justify-center">
           {animationData && <Lottie options={defaultOptions} />}
         </div>
       </div>
-      <p className="mt-4 text-gray-300 font-semibold text-center">{label}</p>
+      <p className="mt-4 text-gray-600 dark:text-gray-300 font-semibold text-center text-sm sm:text-base">
+        {label}
+      </p>
     </div>
   );
 };

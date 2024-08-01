@@ -191,7 +191,7 @@ const CodePage = () => {
               <div
                 key={index}
                 className={cn(
-                  "px-2 sm:px-8 py-5 w-full flex items-start gap-x-2 sm:gap-x-8 rounded-lg",
+                  "px-2 sm:px-8 py-5 w-full flex items-start gap-x-2 sm:gap-x-5 rounded-lg",
                   message.role === "user"
                     ? "bg-white border border-black/10"
                     : "bg-muted"
@@ -200,7 +200,9 @@ const CodePage = () => {
                 {message.role === "user" ? <UserAvatar /> : <BotAvatar />}
 
                 {message.role === "user" ? (
-                  <p className="my-auto">{message.content}</p>
+                  <p className="my-auto text-sm sm:text-base">
+                    {message.content}
+                  </p>
                 ) : (
                   <MarkdownRenderer message={message} />
                 )}
@@ -208,7 +210,7 @@ const CodePage = () => {
             ))}
 
             {isLoading && responseContent && (
-              <div className="px-8 py-5 w-full flex items-start gap-x-8 rounded-lg bg-muted">
+              <div className="px-2 sm:px-8 py-5 w-full flex items-start gap-x-2 sm:gap-x-8 rounded-lg bg-muted">
                 <BotAvatar />
                 <MarkdownRenderer message={{ content: responseContent }} />
               </div>
@@ -232,7 +234,12 @@ const CodePage = () => {
         </div>
       </div>
 
-      <PromptForm form={form} onSubmit={onSubmit} isLoading={isLoading} />
+      <PromptForm
+        form={form}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        placeholder="How to generate a random number in JavaScript?"
+      />
     </>
   );
 };

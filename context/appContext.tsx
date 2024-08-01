@@ -15,20 +15,25 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
     return localStorage.getItem("theme") || "system";
   });
 
+  const systemPrefersDark =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    return theme === "dark" || (theme === "system" && systemPrefersDark);
+  });
+
   useEffect(() => {
-    applyTheme(theme);
+    const newIsDarkMode =
+      theme === "dark" || (theme === "system" && systemPrefersDark);
+
+    setIsDarkMode(newIsDarkMode);
+    applyTheme(newIsDarkMode);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const applyTheme = (theme: string) => {
-    if (theme === "system") {
-      const systemPrefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      document.documentElement.classList.toggle("dark", systemPrefersDark);
-    } else {
-      document.documentElement.classList.toggle("dark", theme === "dark");
-    }
+  const applyTheme = (isDarkMode: boolean) => {
+    document.documentElement.classList.toggle("dark", isDarkMode);
   };
 
   const [isProModalOpen, setIsProModalOpen] = useState<boolean>(false);
@@ -44,6 +49,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         handleProModal,
         theme,
         setTheme,
+        isDarkMode,
       }}
     >
       {children}

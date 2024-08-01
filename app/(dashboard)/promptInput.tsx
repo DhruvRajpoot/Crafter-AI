@@ -11,12 +11,14 @@ interface PromptFormProps {
   form: UseFormReturn<any>;
   isLoading: boolean;
   onSubmit: (data: any) => void;
+  placeholder: string;
 }
 
 const PromptForm: React.FC<PromptFormProps> = ({
   form,
   isLoading,
   onSubmit,
+  placeholder,
 }) => {
   return (
     <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-md z-10 rounded-lg">
@@ -28,12 +30,12 @@ const PromptForm: React.FC<PromptFormProps> = ({
           <FormField
             name="prompt"
             render={({ field }) => (
-              <FormItem className="col-span-12 lg:col-span-9">
+              <FormItem className="col-span-12 lg:col-span-10">
                 <FormControl className="m-0 p-0 px-3">
                   <Input
                     className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                     disabled={isLoading}
-                    placeholder="How to generate a random number in JavaScript?"
+                    placeholder={placeholder}
                     {...field}
                   />
                 </FormControl>
@@ -42,7 +44,7 @@ const PromptForm: React.FC<PromptFormProps> = ({
           />
           <Button
             type="submit"
-            className="col-span-12 lg:col-span-3 min-w-fit mr-14 sm:mr-16 lg:mr-10"
+            className="col-span-12 lg:col-span-2 min-w-fit"
             disabled={isLoading}
           >
             Generate

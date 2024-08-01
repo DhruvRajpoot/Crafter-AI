@@ -38,7 +38,7 @@ const LandingNavbar = () => {
             variant={"outline"}
             className="rounded-full text-sm sm:text-base"
           >
-            Get Started
+            {isSignedIn ? "Dashboard" : "Get Started"}
           </Button>
         </Link>
       </div>
