@@ -93,7 +93,12 @@ const VideoPage = () => {
         </div>
       </div>
 
-      <PromptForm form={form} onSubmit={onSubmit} isLoading={isLoading} />
+      <PromptForm
+        form={form}
+        onSubmit={onSubmit}
+        isLoading={isLoading}
+        placeholder="Generate a short video of a tranquil forest with a gentle rain shower."
+      />
     </>
   );
 };

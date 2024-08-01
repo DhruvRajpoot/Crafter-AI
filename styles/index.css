@@ -1,9 +1,6 @@
 ::-webkit-scrollbar {
   width: 0.5rem;
-}
-
-::-webkit-scrollbar {
-  width: 0.5rem;
+  height: 0.5rem;
 }
 
 ::-webkit-scrollbar-track {
@@ -21,4 +18,11 @@
 .dashboardpage * ::-webkit-scrollbar {
   width: 0.4rem;
   height: 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .dashboardpage * ::-webkit-scrollbar {
+    width: 0.2rem;
+    height: 0.2rem;
+  }
 }
