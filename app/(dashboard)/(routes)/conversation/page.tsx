@@ -69,7 +69,7 @@ const ConversationPage = () => {
 
       const response = await fetch("/api/conversation", {
         method: "POST",
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        body: JSON.stringify({ messages: [userMessage] }),
         headers: {
           "Content-Type": "application/json",
         },

@@ -69,7 +69,7 @@ const CodePage = () => {
 
       const response = await fetch("/api/code", {
         method: "POST",
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        body: JSON.stringify({ messages: [userMessage] }),
         headers: {
           "Content-Type": "application/json",
         },
