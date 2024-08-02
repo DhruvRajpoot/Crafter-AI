@@ -50,9 +50,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    messages.push(instructionMessage);
-
-    const prompt = messages.map((msg: any) => msg.content).join("\n");
+    const prompt = [instructionMessage, ...messages]
+      .map((msg: any) => msg.content)
+      .join("\n");
 
     const result = await model.generateContentStream(prompt);
 
