@@ -176,7 +176,7 @@ const ConversationPage = () => {
 
   return (
     <>
-      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar bg-background dark:bg-background-dark text-foreground dark:text-foreground">
+      <div className="pr-2 flex-1 overflow-y-auto custom-scrollbar bg-background dark:bg-background-dark text-foreground dark:text-foreground">
         <Heading
           title="Conversation"
           description="Generate text using AI"

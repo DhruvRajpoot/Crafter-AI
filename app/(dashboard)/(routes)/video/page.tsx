@@ -58,7 +58,7 @@ const VideoPage = () => {
 
   return (
     <>
-      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar">
+      <div className="pr-2 flex-1 overflow-y-auto custom-scrollbar">
         <Heading
           title="Video Generation"
           description="Generate video based on your prompts"

@@ -58,7 +58,7 @@ const MusicPage = () => {
 
   return (
     <>
-      <div className="pr-2 flex-1 overflow-y-scroll custom-scrollbar">
+      <div className="pr-2 flex-1 overflow-y-auto custom-scrollbar">
         <Heading
           title="Music Generation"
           description="Generate music based on your prompts"
