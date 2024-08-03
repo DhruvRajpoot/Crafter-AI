@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# <p align="center">*Crafter AI*</p>
 
-## Getting Started
+**Crafter AI** is a Next.js web application that leverages advanced AI technologies to generate text, audio, video, and images. It provides a seamless and interactive experience for users to create diverse content effortlessly.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **AI-Driven Content Creation**: Utilize advanced AI technologies to generate high-quality text, audio, video, and images.
+- **Pro Subscription**: Access premium features and tools with the pro subscription plan.
+- **Light and Dark Mode**: Switch between light and dark themes to suit your viewing preferences.
+- **Full Responsiveness**: Fully responsive design to ensure a great experience across all devices and screen sizes.
+- **Modern UI**: Beautiful and modern user interface using Tailwind CSS and Shadcn UI components.
+- **Seamless User Experience**: Intuitive design and interactive elements for a smooth user experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: A React framework for server-side rendering and static site generation.
+- **TypeScript**: A superset of JavaScript that adds static types.
+- **Gemini API**: For advanced AI text generation.
+- **Replicate API**: For AI-driven image and video generation.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Shadcn UI**: Components for a modern and beautiful UI.
+- **Neon DB**: Scalable database solution.
+- **Prisma**: Modern ORM for database access.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Installation
 
-## Learn More
+To run the project locally, follow these steps:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/DhruvRajpoot/Crafter-AI.git
+   cd Crafter-AI
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Configure Environment Variables**:
+   Copy the `.env.example` file to `.env` and add your environment variables:
+   ```bash
+   cp .env.example .env
+   ```
+   Edit the `.env` file to include your API keys and other configuration details.
 
-## Deploy on Vercel
+4. **Run the Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Deployment
+
+The website is deployed and accessible at: [https://crafter-ai.vercel.app/](https://crafter-ai.vercel.app/)
+
+## Contributing
+
+We welcome contributions to Crafter AI! If you would like to contribute, please fork the repository and submit a pull request with your changes. 
+
+1. **Fork the Repository**
+2. **Create a Feature Branch**:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. **Commit Your Changes**:
+   ```bash
+   git commit -am 'Add new feature'
+   ```
+4. **Push to the Branch**:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. **Create a New Pull Request**
+
+## Screenshots
+
+- ### Landing Page<br><br>
+  ![Landing Page](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_8_wwtvjp.png)
+
+- ### About Us<br><br>
+  ![About Us](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687475/Screenshot_9_bnfwnv.png)
+
+- ### Dashboard<br><br>
+  ![Dashboard](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_7_bjpz3e.png)
+
+- ### Code Generation<br><br>
+  ![Code Generation](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_7_bjpz3e.png)
+
+- ### Settings<br><br>
+  ![Settings](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687595/Screenshot_11_zjc2p9.png)
+
+
+## Contact
+
+For questions or support, please contact [dhruvrajpootiiitbhopal@gmail.com](mailto:dhruvrajpootiiitbhopal@gmail.com).
+
+---

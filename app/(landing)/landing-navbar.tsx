@@ -36,7 +36,7 @@ const LandingNavbar = () => {
         <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
           <Button
             variant={"outline"}
-            className="rounded-full text-sm sm:text-base"
+            className="rounded-full text-sm sm:text-base bg-white text-black"
           >
             {isSignedIn ? "Dashboard" : "Get Started"}
           </Button>
