@@ -1,6 +1,6 @@
-# <p align="center">*Crafter AI*</p>
+# <p align="center">*"Crafter AI"*</p>
 
-**Crafter AI** is a Next.js web application that leverages advanced AI technologies to generate text, audio, video, and images. It provides a seamless and interactive experience for users to create diverse content effortlessly.
+### *Crafter AI is a Next.js web application that leverages advanced AI technologies to generate text, audio, video, and images. It provides a seamless and interactive experience for users to create diverse content effortlessly.*
 
 ## Features
 
@@ -15,12 +15,34 @@
 
 - **Next.js**: A React framework for server-side rendering and static site generation.
 - **TypeScript**: A superset of JavaScript that adds static types.
-- **Gemini API**: For advanced AI text generation.
-- **Replicate API**: For AI-driven image and video generation.
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
 - **Shadcn UI**: Components for a modern and beautiful UI.
+- **Clerk**: Authentication and user management service.
+- **Gemini API**: For advanced AI text generation.
+- **Replicate API**: For AI-driven image and video generation.
 - **Neon DB**: Scalable database solution.
 - **Prisma**: Modern ORM for database access.
+
+
+## Preview
+
+You can explore the live version of Crafter AI at [https://crafter-ai.vercel.app/](https://crafter-ai.vercel.app/). 
+
+## Screenshots
+
+- ### Landing Page<br><br>
+  ![Landing Page](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_8_wwtvjp.png)
+  ![About Us](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687475/Screenshot_9_bnfwnv.png)
+
+- ### Dashboard<br><br>
+  ![Dashboard](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_7_bjpz3e.png)
+
+- ### Code Generation<br><br>
+  ![Code Generation](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687475/Screenshot_10_m81saq.png)
+
+- ### Settings<br><br>
+  ![Settings](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687595/Screenshot_11_zjc2p9.png)
+
 
 ## Installation
 
@@ -51,10 +73,6 @@ To run the project locally, follow these steps:
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-## Deployment
-
-The website is deployed and accessible at: [https://crafter-ai.vercel.app/](https://crafter-ai.vercel.app/)
-
 ## Contributing
 
 We welcome contributions to Crafter AI! If you would like to contribute, please fork the repository and submit a pull request with your changes. 
@@ -73,24 +91,6 @@ We welcome contributions to Crafter AI! If you would like to contribute, please 
    git push origin feature/YourFeature
    ```
 5. **Create a New Pull Request**
-
-## Screenshots
-
-- ### Landing Page<br><br>
-  ![Landing Page](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_8_wwtvjp.png)
-
-- ### About Us<br><br>
-  ![About Us](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687475/Screenshot_9_bnfwnv.png)
-
-- ### Dashboard<br><br>
-  ![Dashboard](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_7_bjpz3e.png)
-
-- ### Code Generation<br><br>
-  ![Code Generation](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687474/Screenshot_7_bjpz3e.png)
-
-- ### Settings<br><br>
-  ![Settings](https://res.cloudinary.com/dp3kpqzce/image/upload/v1722687595/Screenshot_11_zjc2p9.png)
-
 
 ## Contact
 

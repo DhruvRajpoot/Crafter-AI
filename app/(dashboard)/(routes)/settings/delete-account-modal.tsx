@@ -40,6 +40,7 @@ const DeleteAccountModal: React.FC<DeleteAccountModalProps> = ({
 
       onClose();
       router.push("/");
+      localStorage.clear();
       toast.success("Account deleted successfully.");
 
       await signOut();
