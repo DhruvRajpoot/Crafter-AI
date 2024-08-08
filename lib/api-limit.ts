@@ -1,48 +1,62 @@
 import prismadb from "./prismadb";
 import { MAX_FREE_COUNTS } from "@/constants";
 
-export const increaseApiLimit = async (userId: string) => {
-  if (!userId) return;
+export const increaseApiLimit = async (userId: string): Promise<void> => {
+  if (!userId) throw new Error("User ID is required");
 
-  const userApiLimit = await prismadb.userApiLimit.findUnique({
-    where: { userId },
-  });
-
-  if (userApiLimit) {
-    await prismadb.userApiLimit.update({
+  try {
+    const userDetails = await prismadb.userDetails.findUnique({
       where: { userId },
-      data: { count: userApiLimit.count + 1 },
     });
-  } else {
-    await prismadb.userApiLimit.create({
-      data: { userId, count: 1 },
-    });
+
+    if (userDetails) {
+      const newCount = Math.min(userDetails.count + 1, MAX_FREE_COUNTS);
+
+      await prismadb.userDetails.update({
+        where: { userId },
+        data: { count: newCount },
+      });
+    } else {
+      await prismadb.userDetails.create({
+        data: { userId, count: 1 },
+      });
+    }
+  } catch (error) {
+    console.error("Error increasing API limit:", error);
+    throw new Error("Unable to increase API limit");
   }
 };
 
-export const checkApiLimit = async (userId: string) => {
-  if (!userId) return false;
-  const userApiLimit = await prismadb.userApiLimit.findUnique({
-    where: { userId },
-  });
+export const apiLimitExhaust = async (userId: string): Promise<boolean> => {
+  if (!userId) throw new Error("User ID is required");
 
-  if (!userApiLimit || userApiLimit.count < MAX_FREE_COUNTS) {
-    return true;
-  } else {
-    return false;
+  try {
+    const userDetails = await prismadb.userDetails.findUnique({
+      where: { userId },
+    });
+
+    const plan = userDetails?.plan;
+
+    if (plan === "pro") return false;
+
+    return userDetails ? userDetails.count >= MAX_FREE_COUNTS : false;
+  } catch (error) {
+    console.error("Error retrieving API limit count:", error);
+    throw new Error("Unable to retrieve API limit count");
   }
 };
 
-export const getApiLimitCount = async (userId: string) => {
-  if (!userId) return 0;
+export const isProUser = async (userId: string): Promise<boolean> => {
+  if (!userId) throw new Error("User ID is required");
 
-  const userApiLimit = await prismadb.userApiLimit.findUnique({
-    where: { userId },
-  });
+  try {
+    const userDetails = await prismadb.userDetails.findUnique({
+      where: { userId },
+    });
 
-  if (userApiLimit) {
-    return userApiLimit.count;
-  } else {
-    return 0;
+    return userDetails ? userDetails.plan === "pro" : false;
+  } catch (error) {
+    console.error("Error checking if user is pro:", error);
+    throw new Error("Unable to check user pro status");
   }
 };

@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { increaseApiLimit, apiLimitExhaust } from "@/lib/api-limit";
 
 const instructionMessage = {
   role: "system",
@@ -27,28 +27,25 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { messages } = body;
 
-    if (!userId) {
+    if (!userId)
       return new NextResponse(
         JSON.stringify({ message: "Unauthorized access" }),
         { status: 401, headers: { "Content-Type": "application/json" } }
       );
-    }
 
-    if (!messages || messages.length === 0) {
+    if (!messages || messages.length === 0)
       return new NextResponse(
         JSON.stringify({ message: "Messages are required" }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
-    }
 
-    const freeTrial = await checkApiLimit(userId);
+    const isLimitExhaust = await apiLimitExhaust(userId);
 
-    if (!freeTrial) {
+    if (isLimitExhaust)
       return new NextResponse(
         JSON.stringify({ message: "Free trial has expired" }),
         { status: 403, headers: { "Content-Type": "application/json" } }
       );
-    }
 
     const prompt = [instructionMessage, ...messages]
       .map((msg: any) => msg.content)
@@ -73,7 +70,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    await increaseApiLimit(userId);
+    if (!isLimitExhaust) await increaseApiLimit(userId);
 
     return new NextResponse(readableStream, {
       headers: {
