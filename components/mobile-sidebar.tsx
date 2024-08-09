@@ -8,9 +8,10 @@ import { useState } from "react";
 
 interface MobileSidebarProps {
   apiLimitCount: number;
+  isProUser: boolean;
 }
 
-const MobileSidebar = ({ apiLimitCount }: MobileSidebarProps) => {
+const MobileSidebar = ({ apiLimitCount, isProUser }: MobileSidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => setIsOpen(false);
@@ -23,7 +24,11 @@ const MobileSidebar = ({ apiLimitCount }: MobileSidebarProps) => {
         </Button>
       </SheetTrigger>
       <SheetContent side={"left"} className="p-0 text-white">
-        <Sidebar apiLimitCount={apiLimitCount} onLinkClick={handleClose} />
+        <Sidebar
+          apiLimitCount={apiLimitCount}
+          onLinkClick={handleClose}
+          isProUser={isProUser}
+        />
       </SheetContent>
     </Sheet>
   );
