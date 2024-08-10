@@ -44,11 +44,11 @@ export async function POST(req: Request) {
     });
   }
 
-  const { id } = evt.data;
   const eventType = evt.type;
 
   if (eventType === "user.created") {
-    await createUser(evt.data);
+    // await createUser(evt.data);
+    console.log("User created successfully");
 
     return NextResponse.json({ message: "User created successfully" });
   }
