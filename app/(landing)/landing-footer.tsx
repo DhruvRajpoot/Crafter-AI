@@ -41,10 +41,6 @@ const LandingFooter = () => {
       link: "https://www.linkedin.com/in/dhruv-rajpoot/",
       icon: <Linkedin />,
     },
-    {
-      link: "/",
-      icon: <Instagram />,
-    },
   ];
 
   return (
@@ -83,7 +79,7 @@ const LandingFooter = () => {
                 key={index}
                 className="hover:text-gray-200 cursor-pointer transition-colors"
               >
-                {link.name}
+                <Link href={link.link}>{link.name}</Link>
               </li>
             ))}
           </ul>
