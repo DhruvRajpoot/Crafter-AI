@@ -18,10 +18,6 @@ export const increaseApiLimit = async (userId: string): Promise<void> => {
         where: { userId },
         data: { count: newCount },
       });
-    } else {
-      await prismadb.userDetails.create({
-        data: { userId, count: 1 },
-      });
     }
   } catch (error) {
     console.error("Error increasing API limit:", error);
