@@ -14,9 +14,6 @@ model User {
   details        UserDetails?      @relation("UserDetailsRelation")
   conversations  UserConversation? @relation("UserConversationRelation")
   codes          UserCode?         @relation("UserCodeRelation")
-  detailsId      String?           @unique
-  conversationId String?           @unique
-  codeId         String?           @unique
   createdAt      DateTime          @default(now())
   updatedAt      DateTime          @updatedAt
 }
