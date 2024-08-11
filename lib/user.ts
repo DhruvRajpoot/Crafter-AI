@@ -7,7 +7,7 @@ export async function createUser(user: any) {
       email_addresses: emailAddresses,
       first_name: firstName,
       last_name: lastName,
-    } = user.data || {};
+    } = user || {};
 
     const email = emailAddresses?.[0]?.email_address;
 
